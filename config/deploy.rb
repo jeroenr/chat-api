@@ -13,7 +13,7 @@ set :scm, :git
 set :user, "jeroen"
 set :use_sudo, true
 
-set :deploy_to, "/opt/lovepotion"
+set :deploy_to, "/opt/chat-api"
 
 ssh_options[:forward_agent] = true
 
