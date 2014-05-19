@@ -1,0 +1,11 @@
+{
+    "max_age_of_key": 60000,
+    "speeddate_time_limit": 600000,
+    "speeddate_count_down": 5000,
+    "pushd_host": "push1.fromamsterdamwithlove.net",
+    "pushd_port": 80,
+    "backend_host": "dev.fromamsterdamwithlove.net",
+    "backend_port": 3000,
+    "debug_log": "/var/log/lovepotion/debug.log",
+    "exceptions_log": "/var/log/lovepotion/exceptions.log"
+}
