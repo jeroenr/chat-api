@@ -27,7 +27,7 @@ module.exports = function (config) {
 
   // serve index.html
   app.get('/', function (req, res) {
-    // res.sendfile(__dirname + '/index.html');
+    res.send(primus.library());
   });
 
   server.listen(8080);
