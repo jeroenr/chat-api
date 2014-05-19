@@ -1,8 +1,8 @@
 var express = require('express')
+    , expressWinston = require('express-winston')
     , Primus = require('primus.io')
     , http = require('http')
-    , app = express()
-    , server = http.createServer(app);
+    , app = express();
 
 /*
  * New relic
@@ -15,8 +15,16 @@ var express = require('express')
 
 module.exports = function (config) {
 
+  var server = http.createServer(app);
+
   // Primus server
   var primus = new Primus(server, { transformer: 'engine.io', parser: 'JSON' });
+
+  // Get helpers
+  var models = require('./models')(config);
+  var logger = models.log.logger;
+
+  require('./config/settings')(app, models.log);
 
   primus.on('connection', function (spark) {
     spark.send('news', { hello: 'world' });
@@ -30,7 +38,9 @@ module.exports = function (config) {
     res.send(primus.library());
   });
 
-  server.listen(8080);
+  server.listen(app.get('port'), function() {
+    logger.info('Chat API started on port %d', app.get('port'));
+  });
 
 }
 

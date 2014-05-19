@@ -1,9 +1,22 @@
-var express = require('express');
+var express = require('express')
+	, util = require('util')
+	, expressWinston = require('express-winston');
 
-module.exports = function (app) {
+module.exports = function (app, log) {
     // Basic express setup
-    app.configure(function() {
-	    app.set('port', process.env.LOVEPOTION_PORT || 4000);
-		app.use(app.router);
-	});
+    app.set('port', process.env.CHAT_API_PORT || 5555);
+	// app.use(cookieParser());
+	// app.use(bodyParser());
+
+	// console.log(util.inspect(log.transports));
+	// app.use(expressWinston.logger(log.transports));
+	// app.use(expressWinston.errorLogger(log.errorLogger));
+
+	app.use(expressWinston.logger({
+      transports: log.transports
+    }));
+
+    app.use(expressWinston.errorLogger({
+      transports: log.exceptionHandlers
+    }));
 }
