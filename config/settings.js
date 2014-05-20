@@ -4,7 +4,7 @@ var express = require('express')
 
 module.exports = function (app, log) {
     // Basic express setup
-    app.set('port', process.env.CHAT_API_PORT || 5555);
+    app.set('port', process.env.CHAT_API_PORT || 5001);
 	// app.use(cookieParser());
 	// app.use(bodyParser());
 

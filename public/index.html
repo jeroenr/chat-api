@@ -7,7 +7,7 @@
 		<script src="/primus/primus.io.js"></script>
 		<script type="text/javascript">
 		  console.log("Trying to connect");
-		  window.primus = Primus.connect("http://localhost:5555",{});
+		  window.primus = Primus.connect("http://localhost:5000",{});
 		  window.primus.on('open', function() {
 		  	window.primus.send('join', 'room1', function(data){
 		  		console.log("Received ack and got data: ", data);
