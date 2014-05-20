@@ -9,11 +9,11 @@
 		  console.log("Trying to connect");
 		  window.primus = Primus.connect("http://localhost:5555",{});
 		  window.primus.on('open', function() {
-		  	window.primus.send('ping', 'hello', function(data){
+		  	window.primus.send('join', 'room1', function(data){
 		  		console.log("Received ack and got data: ", data);
 		  	});
-		  	window.primus.on('pong', function(msg){
-		  		console.log("Received pong and got msg: ", msg);
+		  	window.primus.on('message', function(msg){
+		  		console.log("Received msg: ", msg);
 		  	})
 		  });
 		  console.log("Connected", window.primus);
