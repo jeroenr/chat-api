@@ -1,0 +1,22 @@
+<html>
+	<head>
+		
+	</head>
+	<body>
+		<h1>Test2</h1>
+		<script src="/primus/primus.io.js"></script>
+		<script type="text/javascript">
+		  console.log("Trying to connect");
+		  window.primus = Primus.connect("http://localhost:5555",{});
+		  window.primus.on('open', function() {
+		  	window.primus.send('ping', 'hello', function(data){
+		  		console.log("Received ack and got data: ", data);
+		  	});
+		  	window.primus.on('pong', function(msg){
+		  		console.log("Received pong and got msg: ", msg);
+		  	})
+		  });
+		  console.log("Connected", window.primus);
+		</script>
+	</body>
+</html>

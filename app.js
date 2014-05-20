@@ -28,9 +28,8 @@ module.exports = function (config) {
 
   require('./lib/chatService')(config, models, primus);
 
-  // serve index.html
-  app.get('/', function (req, res) {
-    res.send(primus.library());
+  app.get('/', function(req, res) {
+    res.sendfile("public/index.html")
   });
 
   server.listen(app.get('port'), function() {
