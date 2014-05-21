@@ -1,6 +1,7 @@
 var express = require('express')
     , expressWinston = require('express-winston')
     , Primus = require('primus.io')
+    // , PrimusRedisRooms = require('primus-redis-rooms')
     , http = require('http')
     , app = express();
 
@@ -24,7 +25,27 @@ module.exports = function (config) {
   require('./config/settings')(app, models.log);
 
   // Primus server
-  var primus = new Primus(server, { transformer: 'engine.io', parser: 'JSON' });
+  var primus = new Primus(server, { 
+    // redis: {
+    //   sentinel: true,
+    //   endpoints: [
+    //     { host: 'localhost', port: 6379 },
+    //     { host: 'localhost', port: 26380 },
+    //     { host: 'localhost', port: 26381 }
+    //   ],
+    //   masterName: 'mymaster',
+    //   channel: 'primus' // Optional, defaults to `'primus`'
+    // },
+    // redis: {
+    //   host: 'localhost',
+    //   port: 6379,
+    //   channel: 'primus' // Optional, defaults to `'primus`'
+    // },
+    transformer: 'engine.io', 
+    parser: 'JSON' 
+  });
+
+  primus.use('redis', PrimusRedisRooms);
 
   require('./lib/chatService')(config, models, primus);
 
