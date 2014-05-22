@@ -10,8 +10,8 @@
 		  window.primus = Primus.connect("http://localhost:5000",{});
 		  window.primus.on('open', function() {
 		  	console.log("Opened connection");
-		  	// window.primus.send('join', 'room1', function(data){
-		  	// 	console.log("Received ack and got data: ", data);
+		  	window.primus.send('join', 'room1', function(data){
+		  		console.log("Received ack and got data: ", data);
 
 		  	// 	window.primus.send('message', {message: 'Hello!', room: 'room1'}, function(delivered){
 		  	// 		console.log("Message delivered: ", delivered);
@@ -20,7 +20,7 @@
 		  	// 	window.primus.send('message', {message: 'Yolo!', room: 'room2'}, function(delivered){
 		  	// 		console.log("Message delivered: ", delivered);
 		  	// 	});
-		  	// });
+		  	});
 		  	window.primus.on('message', function(msg){
 		  		console.log("Received msg: ", msg);
 		  	})
