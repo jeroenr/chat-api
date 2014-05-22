@@ -45,7 +45,7 @@ module.exports = function (config) {
     parser: 'JSON' 
   });
 
-  primus.use('redis', PrimusRedisRooms);
+  // primus.use('redis', PrimusRedisRooms);
 
   require('./lib/chatService')(config, models, primus);
 
