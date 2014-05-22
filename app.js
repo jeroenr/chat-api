@@ -2,6 +2,7 @@ var express = require('express')
     , expressWinston = require('express-winston')
     , Primus = require('primus.io')
     // , PrimusRedisRooms = require('primus-redis-rooms')
+    , util = require('util')
     , http = require('http')
     , app = express();
 
@@ -46,6 +47,14 @@ module.exports = function (config) {
   });
 
   // primus.use('redis', PrimusRedisRooms);
+
+  /*
+   * Catch uncaught exceptions
+   */
+
+  process.on('uncaughtException', function(err){
+    console.log('Uncaught exception: ' + util.inspect(err));
+  });
 
   require('./lib/chatService')(config, models, primus);
 
