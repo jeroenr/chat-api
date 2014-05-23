@@ -6,8 +6,15 @@
 		<h1>Test2</h1>
 		<script src="/primus/primus.io.js"></script>
 		<script type="text/javascript">
-		  console.log("Trying to connect");
-		  window.primus = Primus.connect("http://localhost:5000",{});
+		function getParameterByName(name) {
+		    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		        results = regex.exec(location.search);
+		    return results == null ? undefined : decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
+		  var id = (getParameterByName('id') || "jeroen").trim();
+		  console.log("Trying to connect as", id);
+		  window.primus = Primus.connect("http://localhost:5000?id=" + id,{});
 		  window.primus.on('open', function() {
 		  	console.log("Opened connection");
 		  	window.primus.send('join', 'room1', function(data){
