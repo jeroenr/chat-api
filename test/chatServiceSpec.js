@@ -6,10 +6,10 @@ chai.use(spies);
 var should = chai.should()
   , expect = chai.expect;
 
-var redis = require("redis")
-  , redisClient = redis.createClient()
-  , chatMessageChannel = redis.createClient()
-  , redisPublishSpy = chai.spy(chatMessageChannel.publish);
+
+// spies
+var redisPublishSpy = chai.spy()
+  , redisOnSpy = chai.spy();
 
 var winston = require('winston');
 var logger = new (winston.Logger)({
@@ -23,14 +23,26 @@ var mockModels = {
 		logger: logger
 	},
 	redis: {
-		chatMessageChannel: chatMessageChannel,
-		client: redisClient
+		chatMessageChannel: { 
+			on: redisOnSpy
+		},
+		client: {
+			publish: redisPublishSpy 
+		}
 	}
 }
 
 var chatService = require("../lib/chatService.js")({}, mockModels, {});
 
+
+
 describe("ChatService", function(){
+	describe("#onChatMessage", function(){
+		it("should publish message to redis channel", function(){
+			expect(redisOnSpy).to.have.been.called();
+		});
+	});
+
 	describe("#broadcastChatMessage()", function(){
 		it("should publish message to redis channel", function(){
 			var results = chatService.broadcastChatMessage("message");
