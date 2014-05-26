@@ -56,7 +56,7 @@ module.exports = function (config) {
     console.log('Uncaught exception: ' + util.inspect(err));
   });
 
-  require('./lib/chatService')(config, models, primus);
+  require('./lib/primusEventHandler')(config, models, primus);
 
   app.get('/', function(req, res) {
     res.sendfile("public/index.html")

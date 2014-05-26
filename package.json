@@ -18,5 +18,9 @@
     "express-winston": "~0.2.6",
     "node-uuid": "~1.4.1",
     "redis": "~0.10.2"
+  },
+  "devDependencies": {
+    "chai": "~1.9.1",
+    "chai-spies": "~0.5.1"
   }
 }
