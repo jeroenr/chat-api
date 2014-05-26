@@ -91,5 +91,21 @@ describe("ChatService", function(){
 		});
 	});
 
+	describe("#joinAllRooms()", function(){
+		it("should make user leave all specified rooms", function(){
+			var cb = sinon.spy();
+			var execStub = sinon.stub();
+			execStub.callsArgWith(0, undefined,["1,2"]);
+
+			mockModels.redis.client.multi.returns({
+				exec: execStub
+			});
+			var results = chatService.joinAllRooms("user1", ["room1","room2","room3"], cb);
+
+			cb.should.have.been.calledOnce;
+			redisPublishSpy.should.have.been.calledThrice;
+		});
+	});
+
 });
 
