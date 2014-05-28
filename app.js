@@ -1,7 +1,9 @@
 var express = require('express')
     , expressWinston = require('express-winston')
-    , Primus = require('primus.io')
+    // , Primus = require('primus.io')
     // , PrimusRedisRooms = require('primus-redis-rooms')
+    , Primus = require('primus')
+    , Emitter = require('primus-emitter')
     , util = require('util')
     , http = require('http')
     , app = express();
@@ -47,6 +49,8 @@ module.exports = function (config) {
   });
 
   // primus.use('redis', PrimusRedisRooms);
+
+  primus.use('emitter', Emitter);
 
   /*
    * Catch uncaught exceptions
