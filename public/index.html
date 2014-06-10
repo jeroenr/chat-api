@@ -28,9 +28,10 @@
 		  	// 		console.log("Message delivered: ", delivered);
 		  	// 	});
 		  	});
-		  	window.primus.on('message', function(msg){
+		  	window.primus.on('message', function(msg, fn){
 		  		alert("Message: " + msg);
 		  		console.log("Received msg: ", msg);
+		  		fn && fn(msg.id);
 		  	})
 		  });
 		  console.log("Connected", window.primus);

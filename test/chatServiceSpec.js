@@ -2,6 +2,7 @@ var chai = require('chai')
   , spies = require('chai-spies')
   , sinon = require("sinon")
   , sinonChai = require("sinon-chai")
+  , _ = require('underscore')
   , winston = require('winston');
 
 var should = chai.should()
@@ -13,6 +14,8 @@ chai.use(spies);
 // global spies
 var redisPublishSpy = sinon.spy()
   , redisOnSpy = sinon.spy();
+
+var clock = sinon.useFakeTimers();
 
 var mockModels = {
 	log: {
@@ -56,18 +59,19 @@ describe("ChatService", function(){
 
 	describe("#broadcastChatMessage()", function(){
 		it("should publish message to redis channel", function(){
-			var results = chatService.broadcastChatMessage({message: "Hello", room: "room1"});
-			redisPublishSpy.should.have.been.calledWith('chatmessage','{"message":"Hello","room":"room1"}');
+			var results = chatService.broadcastChatMessage({id: "msg_1", message: "Hello", room: "room1"});
+			redisPublishSpy.should.have.been.calledWith('chatmessage','{"id":"msg_1","message":"Hello","room":"room1"}');
 		});
 	});
 
 	describe("#deliverChatMessage()", function(){
 		it("should deliver chat messages to connected recipients", function(){
-			var sparkMock = { userId: "user2", send: sinon.spy()};
+			var sparkMock = { userId: "user2", send: sinon.spy(), messageTimers: {}};
 			mockModels.redis.client.zrange.withArgs("rooms:room1",0,-1).callsArgWith(3, undefined, ["user1","user2"]);
 			mockPrimus.forEach.callsArgWith(0, sparkMock, "user2", []);
-			var results = chatService.deliverChatMessage({message: "Hello", room: "room1"});
+			var results = chatService.deliverChatMessage({id: _.uniqueId("msg_"), message: "Hello", room: "room1"});
 			sparkMock.send.should.have.been.calledWith('message', "Hello");
+			clock.tick(20000);
 		});
 	});
 
