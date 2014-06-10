@@ -14,10 +14,10 @@ module.exports = function(conf) {
   };
 
   // log redis errors, don't crash
-  // _.each(redisClients, function(c){
-  //   c.on('reconnecting', log('reconnecting'));
-  //   c.on('error'       , log('error'));
-  // });
+  _.each(redisClients, function(c){
+    c.on('reconnecting', function() { console.log('reconnecting') } );
+    c.on('error'       , function() { console.log('error')} );
+  });
 
   redisClients.redisChatMessageChannel.subscribe('chatmessage');
   
