@@ -38,6 +38,12 @@ describe("i18n", function(){
 		it("throws an exception on invalid locale", function(){
 			expect(i18n.l.bind(i18n,"pt","Testing...")).to.throw('Unsupported locale pt');
 		});
+
+
+		it("returns original message on missing translation", function(){
+			var translation = i18n.l("nl","Oops");
+			expect(translation).to.equal('Oops');
+		});
 	});
 
 
