@@ -12,7 +12,6 @@ chai.use(sinonChai);
 chai.use(spies);
 
 var i18n = require("../models/i18n.js")({ 
-	localizationFile: "./i18n/",
 	supportedLangs: ["es","nl"]
 });
 

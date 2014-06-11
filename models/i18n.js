@@ -9,7 +9,7 @@ module.exports = function(conf) {
 
   var SUPPORTED_LANGS = conf.supportedLangs || ["en","es","pt","nl"];
 
-  var i18n = new Localize(conf.localizationFile || "../i18n/");
+  var i18n = new Localize(conf.localizationFile || "./i18n/");
 
   i18n.throwOnMissingTranslation(false);
 
