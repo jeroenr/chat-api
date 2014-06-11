@@ -11,7 +11,10 @@ var should = chai.should()
 chai.use(sinonChai);
 chai.use(spies);
 
-var i18n = require("../models/i18n.js")({ localizationFile: "./i18n/"});
+var i18n = require("../models/i18n.js")({ 
+	localizationFile: "./i18n/",
+	supportedLangs: ["es","nl"]
+});
 
 describe("i18n", function(){
 
@@ -33,7 +36,7 @@ describe("i18n", function(){
 
 
 		it("throws an exception on invalid locale", function(){
-			expect(i18n.l.bind(i18n,"invalid","Testing...")).to.throw('Unsupported locale invalid');
+			expect(i18n.l.bind(i18n,"pt","Testing...")).to.throw('Unsupported locale pt');
 		});
 	});
 

@@ -7,7 +7,7 @@ var winston = require('winston')
 
 module.exports = function(conf) {
 
-  var SUPPORTED_LANGS = ["en","es","pt","nl"];
+  var SUPPORTED_LANGS = conf.supportedLangs || ["en","es","pt","nl"];
 
   var i18n = new Localize(conf.localizationFile || "../i18n/");
 
