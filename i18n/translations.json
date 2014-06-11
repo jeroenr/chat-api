@@ -1,0 +1,14 @@
+{
+    "Testing...": {
+        "es": "Pruebas...",
+        "nl": "Testen..."
+    },
+    "Substitution: $[1]": {
+        "es": "Sustitución: $[1]",
+        "nl": "Substitutie: $[1]"
+    },
+    "Test": {
+    	"es": "Prueba $[1], $[2], $[3]",
+    	"nl": "Test $[1], $[2], $[3]"
+    }
+}

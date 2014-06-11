@@ -18,7 +18,8 @@
     "node-uuid": "~1.4.1",
     "redis": "~0.10.2",
     "primus": "~2.2.2",
-    "primus-emitter": "~3.0.2"
+    "primus-emitter": "~3.0.2",
+    "localize": "~0.4.7"
   },
   "devDependencies": {
     "chai": "~1.9.1",
