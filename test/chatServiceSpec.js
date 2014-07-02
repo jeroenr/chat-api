@@ -59,8 +59,8 @@ describe("ChatService", function(){
 
 	describe("#broadcastChatMessage()", function(){
 		it("should publish message to redis channel", function(){
-			var results = chatService.broadcastChatMessage({id: "msg_1", message: "Hello", room: "room1"});
-			redisPublishSpy.should.have.been.calledWith('chatmessage','{"id":"msg_1","message":"Hello","room":"room1"}');
+			var results = chatService.broadcastChatMessage({ message: "Hello", room: "room1"});
+			redisPublishSpy.should.have.been.calledWith('chatmessage', sinon.match(/\{"message":"Hello","room":"room1","id":"[0-9a-zA-Z\-]*"\}/));
 		});
 	});
 
