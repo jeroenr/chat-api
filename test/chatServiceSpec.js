@@ -69,8 +69,9 @@ describe("ChatService", function(){
 			var sparkMock = { userId: "user2", send: sinon.spy(), messageTimers: {}};
 			mockModels.redis.client.zrange.withArgs("rooms:room1",0,-1).callsArgWith(3, undefined, ["user1","user2"]);
 			mockPrimus.forEach.callsArgWith(0, sparkMock, "user2", []);
-			var results = chatService.deliverChatMessage({id: _.uniqueId("msg_"), message: "Hello", room: "room1"});
-			sparkMock.send.should.have.been.calledWith('message', "Hello");
+			var id = _.uniqueId("msg_");
+			var results = chatService.deliverChatMessage({id: id, message: "Hello", room: "room1"});
+			sparkMock.send.should.have.been.calledWith('message', { id: id, message: "Hello", room: "room1" });
 			clock.tick(20000);
 		});
 	});
