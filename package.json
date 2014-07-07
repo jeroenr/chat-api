@@ -19,7 +19,10 @@
     "redis": "~0.10.2",
     "primus": "~2.2.2",
     "primus-emitter": "~3.0.2",
-    "localize": "~0.4.7"
+    "localize": "~0.4.7",
+    "needle": "~0.7.2",
+    "crypto": "0.0.3",
+    "node-regexp": "~0.1.1"
   },
   "devDependencies": {
     "chai": "~1.9.1",
