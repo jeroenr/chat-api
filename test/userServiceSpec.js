@@ -38,6 +38,9 @@ var mockModels = {
 
 var userService = require("../lib/userService.js")({api_endpoint: "http://api_endpoint/api"}, mockModels, needleMock);
 
+
+// var userService = require("../lib/userService.js")({}, mockModels);
+
 describe("UserService", function(){
 	afterEach(function(done){
 	    needleGet.reset();
@@ -67,7 +70,7 @@ describe("UserService", function(){
 
 			userService.list(cb);
 
-			needleGet.should.have.been.calledWith("http://api_endpoint/api/users/")
+			needleGet.should.have.been.calledWith("http://api_endpoint/api/users")
 			cb.should.have.been.calledWith([{id: 1, name: "a"},{id: 2, name: "b"}], { statusCode: 200});
 		});
 	});
@@ -80,7 +83,7 @@ describe("UserService", function(){
 
 			userService.createOrUpdate({ status: "online" }, cb);
 
-			needlePost.should.have.been.calledWith("http://api_endpoint/api/users/",{ status: "online"})
+			needlePost.should.have.been.calledWith("http://api_endpoint/api/users",{ status: "online"})
 			cb.should.have.been.calledWith(true);
 		});
 	});
