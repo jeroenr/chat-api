@@ -46,8 +46,8 @@ module.exports = function (config) {
     // },
     transformer: 'engine.io', 
     parser: 'JSON',
-    headers: true,
-    exposed: true
+    headers: 'true',
+    exposed: 'true'
   });
 
   // primus.use('redis', PrimusRedisRooms);
