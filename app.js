@@ -45,7 +45,9 @@ module.exports = function (config) {
     //   channel: 'primus' // Optional, defaults to `'primus`'
     // },
     transformer: 'engine.io', 
-    parser: 'JSON' 
+    parser: 'JSON',
+    headers: true,
+    exposed: true
   });
 
   // primus.use('redis', PrimusRedisRooms);
