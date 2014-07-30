@@ -6,9 +6,13 @@ set :default_stage, "staging"
 require 'capistrano/ext/multistage'
 
 set :application, "chat-api"
-set :repository,  "git@codebasehq.com:love/is-typing/chat-api.git"
+#set :repository,  "git@codebasehq.com:love/is-typing/chat-api.git"
 
-set :scm, :git 
+set :scm, :none
+set :repository, "."
+set :deploy_via, :copy
+
+#set :scm, :git 
 
 set :user, "jeroen"
 set :use_sudo, true
