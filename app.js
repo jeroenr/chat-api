@@ -47,7 +47,8 @@ module.exports = function (config) {
     transformer: 'engine.io', 
     parser: 'JSON',
     headers: 'true',
-    exposed: 'true'
+    exposed: 'true',
+    pathname: 'istyping'
   });
 
   // primus.use('redis', PrimusRedisRooms);
