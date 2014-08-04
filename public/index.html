@@ -14,7 +14,7 @@
 		}
 		  var id = (getParameterByName('id') || "jeroen").trim();
 		  console.log("Trying to connect as", id);
-		  window.primus = Primus.connect("http://localhost:5000?id=" + id,{});
+		  window.primus = Primus.connect("http://localhost:5001?id=" + id,{});
 		  window.primus.on('open', function() {
 		  	console.log("Opened connection");
 		  	window.primus.send('join', 'room1', function(data){

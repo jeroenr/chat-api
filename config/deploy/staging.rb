@@ -1,1 +1,1 @@
-server 'babur.fromamsterdamwithlove.net', :app, :primary => true
+server 'alpha.fromamsterdamwithlove.net', :app, :primary => true

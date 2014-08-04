@@ -1,3 +1,4 @@
 {
-    "port": 5000
+    "port": 5000,
+    "api_endpoint": "http://192.168.0.11:9000/api"
 }
