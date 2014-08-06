@@ -64,6 +64,10 @@ module.exports = function (config) {
 
   require('./lib/primusEventHandler')(config, models, primus);
 
+  app.get('/', function(req, res) {
+    res.sendfile("public/index.html")
+  });
+
   server.listen(app.get('port'), function() {
     logger.info('Chat API started on port %d', app.get('port'));
   });
