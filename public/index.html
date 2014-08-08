@@ -3,8 +3,8 @@
 		
 	</head>
 	<body>
-		<h1>Test2</h1>
-		<script src="/primus/primus.js"></script>
+		<h1>Test page that includes primus.js</h1>
+		<script src="/savvy/primus.js"></script>
 		<script type="text/javascript">
 		function getParameterByName(name) {
 		    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -14,7 +14,7 @@
 		}
 		  var id = (getParameterByName('id') || "jeroen").trim();
 		  console.log("Trying to connect as", id);
-		  window.primus = Primus.connect("http://localhost:5001?id=" + id,{});
+		  window.primus = Primus.connect("http://localhost:5001?auth_key=wF7jXKvTHF2vnx1KBlPU&access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJJRWlJT1lWUG4zczBBSGhUbjJCZSIsImlhdCI6MTQwNzM1OTk3MywidXNlciI6Implcm9lbiJ9.IdL7HtOtlY2Dbpf69sNASeyFjWMTeApDMveZSfTbOrI&auth_id=1&user_id=" + id,{ path: "/savvy" });
 		  window.primus.on('open', function() {
 		  	console.log("Opened connection");
 		  	window.primus.send('join', 'room1', function(data){

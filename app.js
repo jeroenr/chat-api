@@ -47,7 +47,8 @@ module.exports = function (config) {
     transformer: 'engine.io', 
     parser: 'JSON',
     headers: 'true',
-    exposed: 'true'
+    exposed: 'true',
+    pathname: '/savvy'
   });
 
   // primus.use('redis', PrimusRedisRooms);
@@ -66,6 +67,12 @@ module.exports = function (config) {
 
   app.get('/', function(req, res) {
     res.sendfile("public/index.html")
+  });
+
+  primus.save(__dirname + '/public/primus.js', function save(err){
+    app.get('/savvy/primus.js', function(req, res) {
+      res.sendfile("public/primus.js")
+    });
   });
 
   server.listen(app.get('port'), function() {
