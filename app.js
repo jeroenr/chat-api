@@ -66,14 +66,18 @@ module.exports = function (config) {
   require('./lib/primusEventHandler')(config, models, primus);
 
   app.get('/', function(req, res) {
-    res.sendfile("public/index.html")
+    res.sendfile("public/index.html");
   });
 
   primus.save(__dirname + '/public/primus.js', function save(err){
     app.get('/savvy/primus.js', function(req, res) {
-      res.sendfile("public/primus.js")
+      res.sendfile("public/primus.js");
     });
   });
+
+  app.get('/savvy/savvytoken.js', function(req, res){
+    res.sendfile("public/savvytoken.js");
+  })
 
   server.listen(app.get('port'), function() {
     logger.info('Chat API started on port %d', app.get('port'));
