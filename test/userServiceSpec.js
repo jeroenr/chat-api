@@ -61,11 +61,11 @@ describe("UserService", function(){
 		it("lists user", function(){
 			var cb = sinon.spy();
 
-			needleGet.callsArgWith(2, undefined, { statusCode: 200 },{ hits: [{id: 1, name: "a"},{id: 2, name: "b"}] });
+			needlePost.callsArgWith(3, undefined, { statusCode: 200 },{ hits: [{id: 1, name: "a"},{id: 2, name: "b"}] });
 
-			userService.list(cb);
+			userService.list("3", cb);
 
-			needleGet.should.have.been.calledWith("http://api_endpoint/api/users?page.size=1000000")
+			needlePost.should.have.been.calledWith("http://api_endpoint/api/users/search?page.size=1000000", { query: { customer_id: "3"} })
 			cb.should.have.been.calledWith([{id: 1, name: "a"},{id: 2, name: "b"}], { statusCode: 200});
 		});
 	});
