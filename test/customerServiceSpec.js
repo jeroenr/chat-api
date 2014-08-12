@@ -34,9 +34,9 @@ var mockModels = _.extend(require("../models")({}),{
 	}
 });
 
-var userService = require("../lib/userService.js")({api_endpoint: "http://api_endpoint/api"}, mockModels, needleMock);
+var customerService = require("../lib/customerService.js")({api_endpoint: "http://api_endpoint/api"}, mockModels, needleMock);
 
-describe("UserService", function(){
+describe("CustomerService", function(){
 	afterEach(function(done){
 	    needleGet.reset();
 	    needlePost.reset();
@@ -44,42 +44,29 @@ describe("UserService", function(){
 	    done();
 	});
 
-	describe("#get", function(){
-		it("gets user by id", function(){
+	describe("#getCustomerKeypairs", function(){
+		it("gets customer keypairs by id", function(){
 			var cb = sinon.spy();
 
-			needleGet.callsArgWith(2, undefined, { statusCode: 200 },{id: 2, name: "a"});
+			needleGet.callsArgWith(2, undefined, { statusCode: 200 },{keypairs: [{id: 1},{id: 2}]});
 
-			userService.get(2, cb);
+			customerService.getCustomerKeypairs(2, cb);
 
-			needleGet.should.have.been.calledWith("http://api_endpoint/api/users/2")
-			cb.should.have.been.calledWith({id: 2, name: "a"}, { statusCode: 200});
+			needleGet.should.have.been.calledWith("http://api_endpoint/api/customers/2/keypairs")
+			cb.should.have.been.calledWith({keypairs: [{id: 1},{id: 2}]}, true);
 		});
 	});
 
 	describe("#list", function(){
-		it("lists user", function(){
+		it("lists customers", function(){
 			var cb = sinon.spy();
 
 			needleGet.callsArgWith(2, undefined, { statusCode: 200 },{ hits: [{id: 1, name: "a"},{id: 2, name: "b"}] });
 
-			userService.list(cb);
+			customerService.list(cb);
 
-			needleGet.should.have.been.calledWith("http://api_endpoint/api/users?page.size=1000000")
+			needleGet.should.have.been.calledWith("http://api_endpoint/api/customers")
 			cb.should.have.been.calledWith([{id: 1, name: "a"},{id: 2, name: "b"}], { statusCode: 200});
-		});
-	});
-
-	describe("#createOrUpdate", function(){
-		it("creates or updates a user", function(){
-			var cb = sinon.spy();
-
-			needlePost.callsArgWith(3, undefined, { statusCode: 204 },{});
-
-			userService.createOrUpdate({ status: "online" }, cb);
-
-			needlePost.should.have.been.calledWith("http://api_endpoint/api/users",{ status: "online"})
-			cb.should.have.been.calledWith(true);
 		});
 	});
 });
