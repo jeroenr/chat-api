@@ -67,10 +67,10 @@ describe("ChatService", function(){
 	describe("#deliverChatMessage()", function(){
 		it("should deliver chat messages to connected recipients", function(){
 			var sparkMock = { userId: "user2", send: sinon.spy(), messageTimers: {}};
-			mockModels.redis.client.zrange.withArgs("rooms:room1",0,-1).callsArgWith(3, undefined, ["user1","user2"]);
+			mockModels.redis.client.zrange.withArgs("customer1:rooms:room1",0,-1).callsArgWith(3, undefined, ["user1","user2"]);
 			mockPrimus.forEach.callsArgWith(0, sparkMock, "user2", []);
 			var id = _.uniqueId("msg_");
-			var results = chatService.deliverChatMessage({id: id, message: "Hello", room: "room1"});
+			var results = chatService.deliverChatMessage("customer1", {id: id, message: "Hello", room: "room1"});
 			sparkMock.send.should.have.been.calledWith('message', { id: id, message: "Hello", room: "room1" });
 			clock.tick(20000);
 		});
@@ -83,13 +83,13 @@ describe("ChatService", function(){
 			execStub.callsArgWith(0, undefined,["1,2"]);
 
 			mockModels.redis.client.multi.withArgs([
-				["zrem","rooms:room1","user1"],
-				["zrem","rooms:room2","user1"],
-				["zrem","rooms:for:user1",["room1","room2"]]
+				["zrem","customer1:rooms:room1","user1"],
+				["zrem","customer1:rooms:room2","user1"],
+				["zrem","customer1:rooms:for:user1",["room1","room2"]]
 			]).returns({
 				exec: execStub
 			});
-			var results = chatService.leaveAllRooms("user1", ["room1","room2"], cb);
+			var results = chatService.leaveAllRooms("customer1", "user1", ["room1","room2"], cb);
 
 			cb.should.have.been.calledOnce;
 			redisPublishSpy.should.have.been.calledTwice;
@@ -105,7 +105,7 @@ describe("ChatService", function(){
 			mockModels.redis.client.multi.returns({
 				exec: execStub
 			});
-			var results = chatService.joinAllRooms("user1", ["room1","room2","room3"], cb);
+			var results = chatService.joinAllRooms("customer1", "user1", ["room1","room2","room3"], cb);
 
 			cb.should.have.been.calledOnce;
 			redisPublishSpy.should.have.been.calledThrice;
