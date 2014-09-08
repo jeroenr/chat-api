@@ -89,6 +89,14 @@ describe("ChatService", function(){
 			]).returns({
 				exec: execStub
 			});
+
+			mockModels.redis.client.multi.withArgs([
+				["zcard","customer1:rooms:room1"],
+				["zcard","customer1:rooms:room2"]
+			]).returns({
+				exec: sinon.stub()
+			});
+
 			var results = chatService.leaveAllRooms("customer1", "user1", ["room1","room2"], cb);
 
 			cb.should.have.been.calledOnce;
