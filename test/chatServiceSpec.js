@@ -29,6 +29,9 @@ var mockModels = {
 		chatMessageChannel: { 
 			on: redisOnSpy
 		},
+		isTypingChannel: {
+			on: redisOnSpy
+		},
 		client: {
 			publish: redisPublishSpy,
 			zrange: sinon.stub(),
@@ -74,6 +77,23 @@ describe("ChatService", function(){
 			var results = chatService.deliverChatMessage("customer1", {id: id, message: "Hello", room: "room1"});
 			sparkMock.send.should.have.been.calledWith('message', { id: id, message: "Hello", room: "room1" });
 			clock.tick(20000);
+		});
+	});
+
+	describe("#broadcastIsTyping()", function(){
+		it("should publish is typing to redis channel", function(){
+			var results = chatService.broadcastIsTyping('customer1', "r1", "user1", true);
+			redisPublishSpy.should.have.been.calledWith('istyping', sinon.match(/\{"customer_id":"customer1","user_id":"user1","room":"r1","is_typing":true\}/));
+		});
+	});
+
+	describe("#deliverIsTyping()", function(){
+		it("should deliver is typing to connected recipients", function(){
+			var sparkMock = { userId: "user2", send: sinon.spy()};
+			mockModels.redis.client.zrange.withArgs("customer1:rooms:r1",0,-1).callsArgWith(3, undefined, ["user1","user2"]);
+			mockPrimus.forEach.callsArgWith(0, sparkMock, "user2", []);
+			var results = chatService.deliverIsTyping("customer1", {customer_id:"customer1",user_id:"user1",room:"r1",is_typing:true});
+			sparkMock.send.should.have.been.calledWith('typing', {customer_id:"customer1",user_id:"user1",room:"r1",is_typing:true});
 		});
 	});
 

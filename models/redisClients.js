@@ -10,7 +10,8 @@ module.exports = function(conf) {
   
   var redisClients = {
     redisClient: redis.createClient(redisPort, redisHost),
-    redisChatMessageChannel: redis.createClient(redisPort, redisHost)
+    redisChatMessageChannel: redis.createClient(redisPort, redisHost),
+    redisIsTypingChannel: redis.createClient(redisPort, redisHost)
   };
 
   // log redis errors, don't crash
@@ -20,10 +21,12 @@ module.exports = function(conf) {
   });
 
   redisClients.redisChatMessageChannel.subscribe('chatmessage');
+  redisClients.redisIsTypingChannel.subscribe('istyping');
   
   return {
     client: redisClients.redisClient,
     clients: redisClients,
-    chatMessageChannel: redisClients.redisChatMessageChannel
+    chatMessageChannel: redisClients.redisChatMessageChannel,
+    isTypingChannel: redisClients.redisIsTypingChannel
   }
 }
