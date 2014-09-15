@@ -32,7 +32,8 @@ var mockModels = {
 		client: {
 			publish: redisPublishSpy,
 			zrange: sinon.stub(),
-			multi: sinon.stub()
+			multi: sinon.stub(),
+			mset: sinon.stub()
 		}
 	}
 }
@@ -117,6 +118,15 @@ describe("ChatService", function(){
 
 			cb.should.have.been.calledOnce;
 			redisPublishSpy.should.have.been.calledThrice;
+		});
+	});
+
+	describe("#updateRooms()", function(){
+		it("should change the topic of the specified rooms", function(){
+			chatService.updateRooms("customer1",["r1","r2"],[{ id: "r1", topic: "foo"}, {id: "r2", topic: "bar"}]);
+			mockModels.redis.client.mset.should.have.been.calledWith(
+				["customer1:rooms:r1:props",'{"id":"r1","topic":"foo"}',"customer1:rooms:r2:props",'{"id":"r2","topic":"bar"}']
+			);
 		});
 	});
 
